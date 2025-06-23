@@ -43,7 +43,7 @@
 
         /* --- Stile specifico per il titolo principale --- */
         .main-title {
-            font-size: 5rem; /* Dimensione del font grande, reattiva */
+            font-size: 5rem;
             font-weight: 700;
             text-align: center;
         }
@@ -57,47 +57,92 @@
 
         /* --- Stile per il contenitore della firma --- */
         .signature {
-            position: absolute; /* Posizionamento assoluto rispetto al body */
-            bottom: 20px; /* Distanza dal basso */
-            right: 20px; /* Distanza da destra */
-            color: #555; /* Colore grigio scuro, per la parola "by" */
-            font-size: 0.9rem; /* Dimensione del font piccola */
-            font-weight: 400; /* Peso del font normale */
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: #555;
+            font-size: 0.9rem;
+            font-weight: 400;
         }
         
-        /* Stile specifico per il nome nella firma */
         .signature .gradient-text {
-             font-weight: 700; /* Rende il nome in grassetto */
+             font-weight: 700;
+        }
+
+        /* --- Stile per il Banner di YouTube --- */
+        .youtube-banner {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 20px; /* Aumentato padding */
+            border-radius: 50px; /* Forma a pillola */
+            text-decoration: none;
+            color: #e0e0e0;
+            font-size: 1rem; /* Aumentata dimensione font */
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .youtube-banner:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .youtube-banner svg {
+            width: 24px; /* Aumentata larghezza icona */
+            height: 24px; /* Aumentata altezza icona */
+            margin-right: 12px; /* Aumentato margine */
+            fill: #FF0000; /* Colore rosso di YouTube */
         }
 
 
         /* --- Media Query per Dispositivi Mobili --- */
         @media (max-width: 768px) {
             .main-title {
-                font-size: 3rem; /* Riduci la dimensione del testo su schermi piccoli */
+                font-size: 3rem;
             }
             .signature {
                 font-size: 0.8rem;
                 bottom: 15px;
                 right: 15px;
             }
+            .youtube-banner {
+                font-size: 0.9rem;
+                top: 15px;
+                left: 15px;
+                padding: 8px 15px;
+            }
+             .youtube-banner svg {
+                width: 20px;
+                height: 20px;
+             }
         }
         
         @media (max-width: 480px) {
             .main-title {
-                font-size: 2.2rem; /* Ulteriore riduzione per schermi molto piccoli */
+                font-size: 2.2rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Il contenitore del testo con la classe per lo stile a gradiente -->
+    <!-- Banner di YouTube in alto a sinistra -->
+    <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" class="youtube-banner">
+        <svg viewBox="0 0 28 20" xmlns="http://www.w3.org/2000/svg"><path d="M27.46 3.06s-.28-1.95-.98-2.67C25.1 0 22.46 0 22.46 0H5.53S2.9 0 1.5.4c-.7.72-.98 2.67-.98 2.67S0 5.23 0 7.4v5.2c0 2.17.55 4.34.55 4.34s.28 1.95.98 2.67c1.4.4 4 .4 4 .4h16.93s2.63 0 4-.4c.7-.72.98-2.67.98-2.67s.55-2.17.55-4.34v-5.2c0-2.17-.55-4.34-.55-4.34zM11.1 14.8V5.6l8.35 4.6-8.35 4.6z"></path></svg>
+        <span>Visita il mio Canale</span>
+    </a>
+
+    <!-- Titolo principale centrato -->
     <h1 class="main-title gradient-text">
         Nothing to see here!
     </h1>
 
-    <!-- Scritta in basso a destra con effetto gradiente sul nome -->
+    <!-- Firma in basso a destra -->
     <div class="signature">
         by <span class="gradient-text">Francesco Tonelli</span>
     </div>
