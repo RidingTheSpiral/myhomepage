@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nothing to see here!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Stili di base e Sfondo --- */
+        html, body {
+            height: 100%; /* Assicura che il body occupi tutta l'altezza */
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Nasconde le barre di scorrimento */
+        }
+
+        body {
+            background-color: #121212; /* Sfondo nero profondo */
+            display: flex; /* Usa Flexbox per centrare il contenuto */
+            justify-content: center; /* Centra orizzontalmente */
+            align-items: center; /* Centra verticalmente */
+            font-family: 'Inter', sans-serif; /* Usa un font pulito e moderno */
+        }
+
+        /* --- Stile del Testo con Gradiente --- */
+        .gradient-text {
+            font-size: 5rem; /* Dimensione del font grande, reattiva */
+            font-weight: 700;
+            text-align: center;
+            
+            /* 1. Crea una sfumatura di sfondo */
+            background: linear-gradient(90deg, #4f46e5, #a855f7, #ec4899, #f59e0b);
+            
+            /* 2. Ritaglia lo sfondo alla forma del testo */
+            -webkit-background-clip: text;
+            background-clip: text;
+            
+            /* 3. Rende il colore del testo trasparente per mostrare la sfumatura */
+            color: transparent;
+
+            /* Aggiunge un'animazione sottile alla sfumatura */
+            background-size: 200% auto;
+            animation: gradient-animation 5s ease-in-out infinite;
+        }
+
+        /* --- Animazione della Sfumatura --- */
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Media Query per Dispositivi Mobili --- */
+        @media (max-width: 768px) {
+            .gradient-text {
+                font-size: 3rem; /* Riduci la dimensione del testo su schermi piccoli */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gradient-text {
+                font-size: 2.2rem; /* Ulteriore riduzione per schermi molto piccoli */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Il contenitore del testo con la classe per lo stile a gradiente -->
+    <h1 class="gradient-text">
+        Nothing to see here!
+    </h1>
+
+</body>
+</html>
