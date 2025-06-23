@@ -6,7 +6,7 @@
     <title>Nothing to see here!</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         /* --- Stili di base e Sfondo --- */
         html, body {
@@ -24,12 +24,8 @@
             font-family: 'Inter', sans-serif; /* Usa un font pulito e moderno */
         }
 
-        /* --- Stile del Testo con Gradiente --- */
+        /* --- Stile del Testo con Gradiente (per il titolo e la firma) --- */
         .gradient-text {
-            font-size: 5rem; /* Dimensione del font grande, reattiva */
-            font-weight: 700;
-            text-align: center;
-            
             /* 1. Crea una sfumatura di sfondo */
             background: linear-gradient(90deg, #4f46e5, #a855f7, #ec4899, #f59e0b);
             
@@ -45,6 +41,13 @@
             animation: gradient-animation 5s ease-in-out infinite;
         }
 
+        /* --- Stile specifico per il titolo principale --- */
+        .main-title {
+            font-size: 5rem; /* Dimensione del font grande, reattiva */
+            font-weight: 700;
+            text-align: center;
+        }
+
         /* --- Animazione della Sfumatura --- */
         @keyframes gradient-animation {
             0% { background-position: 0% 50%; }
@@ -52,15 +55,36 @@
             100% { background-position: 0% 50%; }
         }
 
+        /* --- Stile per il contenitore della firma --- */
+        .signature {
+            position: absolute; /* Posizionamento assoluto rispetto al body */
+            bottom: 20px; /* Distanza dal basso */
+            right: 20px; /* Distanza da destra */
+            color: #555; /* Colore grigio scuro, per la parola "by" */
+            font-size: 0.9rem; /* Dimensione del font piccola */
+            font-weight: 400; /* Peso del font normale */
+        }
+        
+        /* Stile specifico per il nome nella firma */
+        .signature .gradient-text {
+             font-weight: 700; /* Rende il nome in grassetto */
+        }
+
+
         /* --- Media Query per Dispositivi Mobili --- */
         @media (max-width: 768px) {
-            .gradient-text {
+            .main-title {
                 font-size: 3rem; /* Riduci la dimensione del testo su schermi piccoli */
+            }
+            .signature {
+                font-size: 0.8rem;
+                bottom: 15px;
+                right: 15px;
             }
         }
         
         @media (max-width: 480px) {
-            .gradient-text {
+            .main-title {
                 font-size: 2.2rem; /* Ulteriore riduzione per schermi molto piccoli */
             }
         }
@@ -69,9 +93,14 @@
 <body>
 
     <!-- Il contenitore del testo con la classe per lo stile a gradiente -->
-    <h1 class="gradient-text">
+    <h1 class="main-title gradient-text">
         Nothing to see here!
     </h1>
+
+    <!-- Scritta in basso a destra con effetto gradiente sul nome -->
+    <div class="signature">
+        by <span class="gradient-text">Francesco Tonelli</span>
+    </div>
 
 </body>
 </html>
