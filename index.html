@@ -133,7 +133,7 @@
             },
             {
                 title: 'Appennini 🏔️ Off-Road 🚜| Ep.10 | Con le piccole è tutto più facile',
-                description: '🌍 OBIETTIVO: Partire dal Mar Mediterraneo, raggiungere San Sebastián sull\'Oceano Atlantico e fare ritorno.⏱️ DURATA: 9 giorni.🏁 DISTANZA PERCORSA: 2.200 km.⛺...',
+                description: 'Traccia descritta "da bicilindrica" che invece si rivela molto interessante per le nostre specialistiche. Alla fine è stato un gran bel giro, da rifare sicuramente!!',
                 url: 'https://youtu.be/8-KkYaed_N4?si=89ttiPItdtNbOPtj'
             }
         ];
@@ -160,9 +160,9 @@
                 const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
                 videoHtml += `
-                    <a href="${video.url}" target="_blank" rel="noopener noreferrer" class="video-card bg-gray-800 rounded-lg overflow-hidden block h-full flex flex-col">
+                    <a href="${video.url}" target="_blank" rel="noopener noreferrer" class="video-card bg-gray-800 rounded-lg overflow-hidden block">
                         <img src="${thumbnailUrl}" alt="Anteprima del video: ${video.title}" class="w-full h-48 object-cover">
-                        <div class="p-6 flex flex-col flex-grow">
+                        <div class="p-6">
                             <h3 class="text-xl font-bold mb-2">${video.title}</h3>
                             <p class="text-gray-400 text-sm mb-4 line-clamp-3 h-20">${video.description}</p>
                             <p class="text-indigo-400 font-semibold mt-auto">Guarda su YouTube &rarr;</p>
