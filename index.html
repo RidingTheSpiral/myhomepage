@@ -90,44 +90,16 @@
                 <h2 class="text-4xl font-bold text-center mb-4">Ultimi Contenuti</h2>
                 <div class="w-20 h-1 bg-indigo-500 mx-auto mb-12 rounded"></div>
                 
-                <!-- Griglia con i video specifici e corretti -->
+                <!-- La griglia sarà popolata dinamicamente da JavaScript -->
                 <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Video: Samsung S24 Ultra -->
-                    <a href="https://youtu.be/uEKbA-shfGU" target="_blank" rel="noopener noreferrer" class="video-card bg-gray-800 rounded-lg overflow-hidden block h-full flex flex-col">
-                        <img src="https://img.youtube.com/vi/uEKbA-shfGU/hqdefault.jpg" alt="Anteprima del video: Samsung S24 Ultra" class="w-full h-48 object-cover">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-bold mb-2">🏔️ Off-Road 🚜| Sottobosco marchigiano</h3>
-                            <p class="text-gray-400 text-sm mb-4">Due passaggi interessanti nei sottoboschi marchigiani </p>
-                            <p class="text-indigo-400 font-semibold mt-auto">Guarda su YouTube &rarr;</p>
-                        </div>
-                    </a>
-                    <!-- Video: Google AI Search -->
-                    <a href="https://youtu.be/OaxBqfQh0ag" target="_blank" rel="noopener noreferrer" class="video-card bg-gray-800 rounded-lg overflow-hidden block h-full flex flex-col">
-                        <img src="https://img.youtube.com/vi/OaxBqfQh0ag/hqdefault.jpg" alt="Anteprima del video: Google AI Search" class="w-full h-48 object-cover">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-bold mb-2">Marche 🏔️ Off-Road 🚜| Terza uscita KTM 350 EXC-F |</h3>
-                            <p class="text-gray-400 text-sm mb-4">Uscita a tre con le "piccole"
-</p>
-                            <p class="text-indigo-400 font-semibold mt-auto">Guarda su YouTube &rarr;</p>
-                        </div>
-                    </a>
-                    <!-- Video: Creare un Canale YouTube -->
-                    <a href="https://youtu.be/8-KkYaed_N4" target="_blank" rel="noopener noreferrer" class="video-card bg-gray-800 rounded-lg overflow-hidden block h-full flex flex-col">
-                        <img src="https://img.youtube.com/vi/8-KkYaed_N4/hqdefault.jpg" alt="Anteprima del video: Creare un Canale YouTube" class="w-full h-48 object-cover">
-                        <div class="p-6 flex flex-col flex-grow">
-                            <h3 class="text-xl font-bold mb-2">Appennini 🏔️ Off-Road 🚜| Ep.10 | Con le piccole è tutto più facile</h3>
-                             <p class="text-gray-400 text-sm mb-4">Traccia descritta "da bicilindrica" che invece si rivela molto interessante per le nostre specialistiche. Alla fine è stato un gran bel giro, da rifare sicuramente!!
-</p>
-                            <p class="text-indigo-400 font-semibold mt-auto">Guarda su YouTube &rarr;</p>
-                        </div>
-                    </a>
+                    <!-- Contenuto dinamico dei video verrà inserito qui -->
                 </div>
 
-                 <div class="text-center mt-12">
-                     <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors text-lg">
+                <div class="text-center mt-12">
+                    <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors text-lg">
                         Guarda tutti i video
                     </a>
-                 </div>
+                </div>
             </div>
         </section>
     </main>
@@ -144,7 +116,68 @@
         </div>
     </footer>
 
-    <!-- Lo script per il caricamento dinamico è stato rimosso -->
+    <script>
+        // Array con le informazioni sugli ultimi video.
+        // Queste informazioni sono state ottenute manualmente per garantire la correttezza,
+        // dato che non è possibile chiamare un'API di terze parti direttamente da qui.
+        const latestVideos = [
+            {
+                title: '🏔️ Transpirenaica | Agosto 2025 | ⏱️ 9 giorni - 🏁 2.200 km',
+                description: '🌍 OBIETTIVO: Partire dal Mar Mediterraneo, raggiungere San Sebastián sull\'Oceano Atlantico e fare ritorno.⏱️ DURATA: 9 giorni.🏁 DISTANZA PERCORSA: 2.200 km.⛺ STILE DI VIAGGIO: 100% autonomi. Abbiamo dormito ogni singola notte in tenda, con le nostre moto cariche di tutto l\'occorrente per il bivacco.⬇️​ Link traccia: https://www.wikiloc.com/trail-bike-trails/transpirenaica-offroad-mieltxo-youtube-167569808',
+                url: 'https://youtu.be/BwzwBRAA5aQ?si=5EaV8cyiozavbVqq'
+            },
+            {
+                title: 'Appennini 🏔️ Off-Road 🚜| Ep.11 | feat. "Giro Facile"',
+                description: 'Gran bel giro con i ragazzi di "Giro Facile"',
+                url: 'https://youtu.be/1MGiz2uR-2Q'
+            },
+            {
+                title: 'Appennini 🏔️ Off-Road 🚜| Ep.10 | Con le piccole è tutto più facile',
+                description: 'Traccia descritta "da bicilindrica" che invece si rivela molto interessante per le nostre specialistiche. Alla fine è stato un gran bel giro, da rifare sicuramente!!',
+                url: 'https://youtu.be/8-KkYaed_N4?si=89ttiPItdtNbOPtj'
+            }
+        ];
+
+        // Funzione per estrarre l'ID del video da un URL di YouTube
+        function getVideoId(url) {
+            const urlObj = new URL(url);
+            let videoId = '';
+            if (urlObj.hostname === 'youtu.be') {
+                videoId = urlObj.pathname.slice(1);
+            } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
+                videoId = urlObj.searchParams.get('v');
+            }
+            return videoId;
+        }
+
+        // Funzione per creare e inserire le schede video
+        window.onload = function() {
+            const videoGrid = document.getElementById('video-grid');
+            let videoHtml = '';
+
+            latestVideos.forEach(video => {
+                const videoId = getVideoId(video.url);
+                const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+                videoHtml += `
+                    <a href="${video.url}" target="_blank" rel="noopener noreferrer" class="video-card bg-gray-800 rounded-lg overflow-hidden block h-full flex flex-col">
+                        <img src="${thumbnailUrl}" alt="Anteprima del video: ${video.title}" class="w-full h-48 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold mb-2">${video.title}</h3>
+                            <p class="text-gray-400 text-sm mb-4">${video.description}</p>
+                            <p class="text-indigo-400 font-semibold mt-auto">Guarda su YouTube &rarr;</p>
+                        </div>
+                    </a>
+                `;
+            });
+
+            videoGrid.innerHTML = videoHtml;
+        };
+
+    </script>
+</body>
+</html>
 
 </body>
 </html>
+
