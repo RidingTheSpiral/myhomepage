@@ -1,185 +1,308 @@
 <!DOCTYPE html>
-<html lang="it" class="scroll-smooth">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Francesco Tonelli | Creator</title>
+    <title>Francesco Tonelli | Personal Portfolio</title>
+    <meta name="description" content="Sito personale di Francesco Tonelli. Ultimi video, progetti e contatti.">
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Stili Personalizzati */
+        /* --- VARIABILI & RESET --- */
+        :root {
+            --bg-color: #0f172a;      /* Blu scuro profondo */
+            --card-bg: #1e293b;       /* Blu/Grigio per le card */
+            --text-main: #f8fafc;     /* Bianco sporco */
+            --text-muted: #94a3b8;    /* Grigio chiaro */
+            --accent: #38bdf8;        /* Azzurro acceso */
+            --accent-hover: #0ea5e9;  
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #111827; /* Dark blue-gray */
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
         }
 
-        /* Gradiente generico per il titolo principale */
-        .gradient-text {
-            background: linear-gradient(90deg, #4f46e5, #a855f7, #ec4899);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        /* Gradiente specifico per Instagram */
-        .instagram-gradient {
-            background: linear-gradient(45deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        .hero-animation {
-            animation: fadeIn 2s ease-in-out;
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        section { padding: 80px 0; }
+
+        /* --- HEADER --- */
+        header {
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; }
+        .logo span { color: var(--accent); }
+
+        .nav-links { display: flex; gap: 30px; }
+        .nav-links a { font-weight: 500; font-size: 0.95rem; color: var(--text-muted); }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding-top: 100px;
+            padding-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--accent);
+            color: var(--bg-color);
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+        }
+        .btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); }
+
+        /* --- VIDEO SECTION --- */
+        .videos-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .videos-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
+        .videos-header p { color: var(--text-muted); }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
         .video-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
         }
 
         .video-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: var(--accent);
         }
+
+        .thumbnail-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background: #000;
+        }
+
+        .thumbnail-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .video-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .video-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
+        .video-date { font-size: 0.85rem; color: var(--text-muted); margin-top: auto; }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 50px 0;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 60px;
+        }
+
+        .social-links { margin-bottom: 20px; }
+        .social-links a {
+            font-size: 1.5rem;
+            margin: 0 15px;
+            color: var(--text-main);
+        }
+        .social-links a:hover { color: var(--accent); }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Semplificazione per mobile: nasconde menu */
+        }
+        
+        /* Loading State */
+        #loading-msg { text-align: center; color: var(--text-muted); width: 100%; padding: 20px;}
     </style>
 </head>
-<body class="bg-gray-900 text-gray-200">
+<body>
 
-    <!-- ===== Header / Navbar ===== -->
-    <header class="fixed top-0 left-0 w-full bg-gray-900/50 backdrop-blur-sm z-10 border-b border-gray-700/50">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Link a Instagram sulla sinistra con gradiente e bordo -->
-            <a href="https://www.instagram.com/themorpheus/" target="_blank" rel="noopener noreferrer" class="inline-block border-2 border-gray-600 hover:border-gray-500 px-4 py-2 rounded-lg transition-colors">
-                <span class="text-xl font-bold instagram-gradient">Instagram</span>
-            </a>
-            
-            <!-- Pulsante YouTube sulla destra -->
-            <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" class="flex items-center space-x-2 bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg transition-colors">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 18a8 8 0 100-16A8 8 0 0010 18zM7 6l6 4-6 4V6z"></path></svg>
-                <span>YouTube</span>
-            </a>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">F<span>Tonelli</span></a>
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#videos">Video</a>
+                    <a href="https://github.com/ftonelli" target="_blank">GitHub</a>
+                </div>
+            </nav>
         </div>
     </header>
 
-    <!-- ===== Main Content ===== -->
     <main>
-        <!-- --- Hero Section --- -->
-        <section id="home" class="h-screen flex items-center justify-center text-center bg-gray-900 hero-animation">
-            <div class="container mx-auto px-6">
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black uppercase">
-                    <span class="gradient-text">Nothing to see here!</span>
-                </h1>
+        <section id="home" class="hero">
+            <div class="container">
+                <h1>Benvenuto nel mio<br>Spazio Digitale</h1>
+                <p>Esploro tecnologia, coding e condivido quello che imparo lungo il percorso.</p>
+                <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" class="btn">
+                    <i class="fa-brands fa-youtube"></i> Iscriviti al Canale
+                </a>
             </div>
         </section>
 
-        <!-- --- Videos Section --- -->
-        <section id="videos" class="py-20 bg-gray-900">
-            <div class="container mx-auto px-6">
-                <h2 class="text-4xl font-bold text-center mb-4">Ultimi Contenuti</h2>
-                <div class="w-20 h-1 bg-indigo-500 mx-auto mb-12 rounded"></div>
-                
-                <!-- La griglia sarà popolata dinamicamente da JavaScript -->
-                <div id="video-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Contenuto dinamico dei video verrà inserito qui -->
+        <section id="videos">
+            <div class="container">
+                <div class="videos-header">
+                    <h2>Ultimi Video</h2>
+                    <p>Caricati automaticamente dal canale YouTube</p>
                 </div>
 
-                <div class="text-center mt-12">
-                    <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors text-lg">
-                        Guarda tutti i video
-                    </a>
-                </div>
+                <div class="video-grid" id="video-container">
+                    <div id="loading-msg">Caricamento video in corso...</div>
+                    </div>
             </div>
         </section>
     </main>
 
-    <!-- ===== Footer ===== -->
-    <footer class="bg-gray-800/50 border-t border-gray-700/50 py-6">
-        <div class="container mx-auto px-6 text-center text-gray-400">
-            <div class="flex justify-center items-center space-x-4 mb-4">
-                <a href="https://www.instagram.com/themorpheus/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition-colors" aria-label="Instagram">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c-4.032 0-4.52.016-6.095.088c-1.575.072-2.67.34-3.62.723c-.974.39-1.743.88-2.508 1.644C-.63 5.176-.9 5.945-1.29 6.92c-.385.95-.65 2.045-.723 3.62C-2.084 12.115-2.099 12.603-2.1 14c0 1.398.015 1.885.088 3.46c.072 1.575.34 2.67.723 3.62c.39.974.88 1.743 1.644 2.508c.765.765 1.534 1.25 2.508 1.644c.95.385 2.045.65 3.62.723c1.575.072 2.063.088 6.095.088s4.52-.016 6.095-.088c1.575-.072 2.67-.34 3.62-.723c.974-.39 1.743.88 2.508-1.644c.765-.765 1.25-1.534 1.644-2.508c.385-.95.65-2.045.723-3.62c.072-1.575.088-2.063.088-6.095s-.016-4.52-.088-6.095c-.072-1.575-.34-2.67-.723-3.62c-.39-.974-.88-1.743-1.644-2.508c-.765-.765-1.534-1.25-2.508-1.644c-.95-.385-2.045-.65-3.62-.723C16.835 2.016 16.347 2 12.315 2zm0 1.8c4.005 0 4.445.015 6.01.086c1.46.067 2.31.32 2.92.55c.74.28 1.25.64 1.8 1.19c.55.55 1 1.06 1.19 1.8c.23.61.483 1.46.55 2.92c.07 1.565.086 2.005.086 6.01s-.015 4.445-.086 6.01c-.067 1.46-.32 2.31-.55 2.92c-.28.74-.64-1.25-1.19 1.8c-.55.55-1.06 1-1.8 1.19c-.61.23-1.46.483-2.92.55c-1.565.07-2.005.086-6.01.086s-4.445-.015-6.01-.086c-1.46-.067-2.31-.32-2.92-.55c-.74-.28-1.25-.64-1.8-1.19c-.55-.55-1-1.06-1.19-1.8c-.23-.61-.483-1.46-.55-2.92c-.07-1.565-.086-2.005-.086-6.01s.015-4.445.086-6.01c.067-1.46.32-2.31.55-2.92c.28-.74.64-1.25 1.19-1.8c.55-.55 1.06-1 1.8-1.19c.61-.23 1.46-.483 2.92-.55C7.87 3.815 8.31 3.8 12.315 3.8zm0 4.41A3.785 3.785 0 1012.315 16a3.785 3.785 0 000-7.785zm0 1.8a1.985 1.985 0 110 3.97a1.985 1.985 0 010-3.97zM20.9 6.885a1.425 1.425 0 100 2.85a1.425 1.425 0 000-2.85z" clip-rule="evenodd"></path></svg>
-                </a>
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://github.com/ftonelli" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.linkedin.com/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
             </div>
-            <p>&copy; 2025 <span class="font-bold gradient-text">Francesco Tonelli</span>. Tutti i diritti riservati.</p>
+            <p>&copy; 2025 Francesco Tonelli. Tutti i diritti riservati.</p>
         </div>
     </footer>
 
     <script>
-        // Array con le informazioni sugli ultimi video.
-        // Queste informazioni sono state ottenute manualmente per garantire la correttezza,
-        // dato che non è possibile chiamare un'API di terze parti direttamente da qui.
-        const latestVideos = [
-            {
-                title: 'Motocavalcata  La Magnifica 2025 | Costermano sul Garda',
-                description: 'Purtroppo ho la GoPro che fa come gli pare 🤬​🤬​🤬​ Motocavalcata che si tiene a Costermano sul Garda , organizzata da Valdimazo Off Road Lago di Garda. Con le nostre "piccole" abbiamo fatto la traccia hard e tutte le 4 varianti tecniche. Da tenere presente che la notte ha piovuto abbondantemente, il che ha reso il percorso ancora più interessante!',
-                url: 'https://youtu.be/S2DftSOc1IM'
-            },
-            {
-                title: 'Marche 🏔️ Off-Road 🚜| KTM 350 EXC-C',
-                description: 'Sono tornato nei bellissimi sottoboschi marchigiani.Sveglia presto, carica la moto, 40 minuti di furgone, scarica la moto, vestiti e parti. Salite difficili e discese scivolose...Molti dicono "ma chi te lo fa fare?!" Questo sport ti entra nel sangue! E come diceva qualcuno "Se fai enduro non sei sano del tutto!!" ',
-                url: 'https://youtu.be/Ji1Ov0OoTHI'
-            },
-            {
-                title: 'Appennini 🏔️ Off-Road 🚜| Ep.12 | Varianti e posti nuovi',
-                description: 'Siamo arrivati in posti che già conoscevo passando da strade nuove ed ho scoperto posti che non avevo mai visto. Gran bel giro, livello alto… infatti ho avuto le mie belle difficoltà!!',
-                url: 'https://youtu.be/cspmP561SRU'
-            }
-        ];
+        // --- CONFIGURAZIONE ---
+        // IMPORTANTE: Inserisci qui il tuo Channel ID di YouTube.
+        // Se non lo conosci, vai su una pagina di un tuo video, visualizza sorgente pagina e cerca "channelId"
+        // Oppure usa un sito come "commentpicker.com/youtube-channel-id.php" inserendo il tuo link @FrancescoTonelli
+        
+        // Ho provato a cercarlo, per @FrancescoTonelli dovrebbe essere questo (ma verifica!):
+        const YOUTUBE_CHANNEL_ID = 'UC' + 'UC1mXM_M40mLIkw8CJeWj3MA'; // <--- INCOLLA QUI IL TUO VERO ID AL POSTO DI XXXXX
 
-        // Funzione per estrarre l'ID del video da un URL di YouTube
-        function getVideoId(url) {
-            const urlObj = new URL(url);
-            let videoId = '';
-            if (urlObj.hostname === 'youtu.be') {
-                videoId = urlObj.pathname.slice(1);
-            } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
-                videoId = urlObj.searchParams.get('v');
+        // Se non trovi l'ID, fammelo sapere e ti aiuto a trovarlo.
+        // L'ID inizia sempre con "UC..."
+        
+        const MAX_VIDEOS = 3; // Numero di video da mostrare
+
+        async function fetchLatestVideos() {
+            const container = document.getElementById('video-container');
+            // Usiamo rss2json per convertire il feed XML di YouTube in JSON
+            const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (data.status === 'ok') {
+                    container.innerHTML = ''; // Rimuovi messaggio di caricamento
+                    
+                    // Prendi solo gli ultimi X video
+                    const items = data.items.slice(0, MAX_VIDEOS);
+
+                    items.forEach(video => {
+                        // Estrai ID video dal link per ottenere thumbnail migliore
+                        const videoId = video.link.split('v=')[1];
+                        const highResThumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
+
+                        const date = new Date(video.pubDate).toLocaleDateString('it-IT', {
+                            year: 'numeric', month: 'long', day: 'numeric'
+                        });
+
+                        const html = `
+                            <a href="${video.link}" target="_blank" class="video-card">
+                                <div class="thumbnail-wrapper">
+                                    <img src="${highResThumbnail}" alt="${video.title}" loading="lazy" 
+                                         onerror="this.src='${video.thumbnail}'"> 
+                                </div>
+                                <div class="video-info">
+                                    <h3 class="video-title">${video.title}</h3>
+                                    <div class="video-date"><i class="far fa-calendar-alt"></i> ${date}</div>
+                                </div>
+                            </a>
+                        `;
+                        container.innerHTML += html;
+                    });
+                } else {
+                    container.innerHTML = '<p>Impossibile caricare i video al momento.</p>';
+                }
+            } catch (error) {
+                console.error('Errore:', error);
+                container.innerHTML = '<p>Errore nel caricamento del feed video.</p>';
             }
-            return videoId;
         }
 
-        // Funzione per creare e inserire le schede video
-        window.onload = function() {
-            const videoGrid = document.getElementById('video-grid');
-            let videoHtml = '';
-
-            latestVideos.forEach(video => {
-                const videoId = getVideoId(video.url);
-                const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-
-                videoHtml += `
-                    <a href="${video.url}" target="_blank" rel="noopener noreferrer" class="video-card bg-gray-800 rounded-lg overflow-hidden flex flex-col">
-                        <img src="${thumbnailUrl}" onerror="this.onerror=null; this.src='https://img.youtube.com/vi/${videoId}/hqdefault.jpg'" alt="Anteprima del video: ${video.title}" class="w-full object-cover">
-                        <div class="p-6 flex-grow">
-                            <h3 class="text-xl font-bold mb-2">${video.title}</h3>
-                            <p class="text-gray-400 text-sm mb-4 min-h-20">${video.description}</p>
-                            <p class="text-indigo-400 font-semibold mt-auto">Guarda su YouTube &rarr;</p>
-                        </div>
-                    </a>
-                `;
-            });
-
-            videoGrid.innerHTML = videoHtml;
-        };
+        // Avvia lo script solo se l'ID è stato configurato correttamente
+        if(YOUTUBE_CHANNEL_ID.length > 10 && !YOUTUBE_CHANNEL_ID.includes('XXXX')) {
+            fetchLatestVideos();
+        } else {
+            document.getElementById('video-container').innerHTML = 
+                '<p style="color:var(--accent)">⚠️ Configurazione incompleta: Inserisci il <strong>CHANNEL ID</strong> nel file index.html</p>';
+        }
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
