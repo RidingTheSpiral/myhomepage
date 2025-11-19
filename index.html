@@ -21,6 +21,7 @@
             --text-muted: #94a3b8;    /* Grigio chiaro */
             --accent: #38bdf8;        /* Azzurro acceso */
             --accent-hover: #0ea5e9;  
+            --instagram: #E1306C;     /* Colore brand Instagram (opzionale) */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -67,6 +68,9 @@
         .nav-links { display: flex; gap: 30px; }
         .nav-links a { font-weight: 500; font-size: 0.95rem; color: var(--text-muted); }
         .nav-links a:hover { color: var(--accent); }
+        
+        /* Stile specifico per link Instagram nell'header se vuoi differenziarlo */
+        .nav-links a.ig-link:hover { color: #E1306C; }
 
         /* --- HERO SECTION --- */
         .hero {
@@ -172,11 +176,15 @@
             color: var(--text-main);
         }
         .social-links a:hover { color: var(--accent); }
+        
+        /* Hover specifico per icone social */
+        .social-links a.fa-instagram:hover { color: #E1306C; }
+        .social-links a.fa-youtube:hover { color: #FF0000; }
 
         /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* Semplificazione per mobile: nasconde menu */
+            .nav-links { display: none; } /* Semplificazione per mobile */
         }
         
         /* Loading State */
@@ -192,7 +200,7 @@
                 <div class="nav-links">
                     <a href="#home">Home</a>
                     <a href="#videos">Video</a>
-                    <a href="https://github.com/ftonelli" target="_blank">GitHub</a>
+                    <a href="https://www.instagram.com/themorpheus/" target="_blank" class="ig-link">Instagram</a>
                 </div>
             </nav>
         </div>
@@ -226,9 +234,8 @@
     <footer>
         <div class="container">
             <div class="social-links">
-                <a href="https://github.com/ftonelli" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-                <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://www.linkedin.com/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" title="YouTube" class="fa-brands fa-youtube"></a>
+                <a href="https://www.instagram.com/themorpheus/" target="_blank" title="Instagram" class="fa-brands fa-instagram"></a>
             </div>
             <p>&copy; 2025 Francesco Tonelli. Tutti i diritti riservati.</p>
         </div>
@@ -236,15 +243,8 @@
 
     <script>
         // --- CONFIGURAZIONE ---
-        // IMPORTANTE: Inserisci qui il tuo Channel ID di YouTube.
-        // Se non lo conosci, vai su una pagina di un tuo video, visualizza sorgente pagina e cerca "channelId"
-        // Oppure usa un sito come "commentpicker.com/youtube-channel-id.php" inserendo il tuo link @FrancescoTonelli
-        
-        // Ho provato a cercarlo, per @FrancescoTonelli dovrebbe essere questo (ma verifica!):
-        const YOUTUBE_CHANNEL_ID = 'UC1mXM_M40mLIkw8CJeWj3MA'; // <--- INCOLLA QUI IL TUO VERO ID AL POSTO DI XXXXX
-
-        // Se non trovi l'ID, fammelo sapere e ti aiuto a trovarlo.
-        // L'ID inizia sempre con "UC..."
+        // ID Canale corretto già inserito
+        const YOUTUBE_CHANNEL_ID = 'UC1mXM_M40mLIkw8CJeWj3MA'; 
         
         const MAX_VIDEOS = 3; // Numero di video da mostrare
 
@@ -296,14 +296,10 @@
             }
         }
 
-        // Avvia lo script solo se l'ID è stato configurato correttamente
-        if(YOUTUBE_CHANNEL_ID.length > 10 && !YOUTUBE_CHANNEL_ID.includes('XXXX')) {
+        // Avvio automatico
+        if(YOUTUBE_CHANNEL_ID.length > 10) {
             fetchLatestVideos();
-        } else {
-            document.getElementById('video-container').innerHTML = 
-                '<p style="color:var(--accent)">⚠️ Configurazione incompleta: Inserisci il <strong>CHANNEL ID</strong> nel file index.html</p>';
         }
     </script>
 </body>
 </html>
-
