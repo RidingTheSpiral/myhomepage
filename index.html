@@ -21,7 +21,7 @@
             --text-muted: #94a3b8;    /* Grigio chiaro */
             --accent: #38bdf8;        /* Azzurro acceso */
             --accent-hover: #0ea5e9;  
-            --instagram: #E1306C;     /* Colore brand Instagram (opzionale) */
+            --instagram: #E1306C;     
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -69,7 +69,6 @@
         .nav-links a { font-weight: 500; font-size: 0.95rem; color: var(--text-muted); }
         .nav-links a:hover { color: var(--accent); }
         
-        /* Stile specifico per link Instagram nell'header se vuoi differenziarlo */
         .nav-links a.ig-link:hover { color: #E1306C; }
 
         /* --- HERO SECTION --- */
@@ -115,8 +114,7 @@
             margin-bottom: 50px;
         }
         .videos-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
-        .videos-header p { color: var(--text-muted); }
-
+        
         .video-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -221,8 +219,7 @@
             <div class="container">
                 <div class="videos-header">
                     <h2>Ultimi Video</h2>
-                    <p>Caricati automaticamente dal canale YouTube</p>
-                </div>
+                    </div>
 
                 <div class="video-grid" id="video-container">
                     <div id="loading-msg">Caricamento video in corso...</div>
@@ -243,10 +240,8 @@
 
     <script>
         // --- CONFIGURAZIONE ---
-        // ID Canale corretto già inserito
         const YOUTUBE_CHANNEL_ID = 'UC1mXM_M40mLIkw8CJeWj3MA'; 
-        
-        const MAX_VIDEOS = 3; // Numero di video da mostrare
+        const MAX_VIDEOS = 3; 
 
         async function fetchLatestVideos() {
             const container = document.getElementById('video-container');
@@ -261,11 +256,9 @@
                 if (data.status === 'ok') {
                     container.innerHTML = ''; // Rimuovi messaggio di caricamento
                     
-                    // Prendi solo gli ultimi X video
                     const items = data.items.slice(0, MAX_VIDEOS);
 
                     items.forEach(video => {
-                        // Estrai ID video dal link per ottenere thumbnail migliore
                         const videoId = video.link.split('v=')[1];
                         const highResThumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
 
@@ -296,7 +289,6 @@
             }
         }
 
-        // Avvio automatico
         if(YOUTUBE_CHANNEL_ID.length > 10) {
             fetchLatestVideos();
         }
