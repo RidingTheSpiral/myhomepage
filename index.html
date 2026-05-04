@@ -5,293 +5,901 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Francesco Tonelli | Personal Portfolio</title>
     <meta name="description" content="Sito personale di Francesco Tonelli. Ultimi video, progetti e contatti.">
-    
+
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230f172a'/%3E%3Ctext x='50' y='70' font-family='Inter, sans-serif' font-size='60' font-weight='800' fill='%23f8fafc' text-anchor='middle'%3EF%3C/text%3E%3Ctext x='75' y='70' font-family='Inter, sans-serif' font-size='60' font-weight='800' fill='%2338bdf8' text-anchor='middle'%3ET%3C/text%3E%3C/svg%3E">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- VARIABILI & RESET --- */
         :root {
-            --bg-color: #0f172a;      /* Blu scuro profondo */
-            --card-bg: #1e293b;       /* Blu/Grigio per le card */
-            --text-main: #f8fafc;     /* Bianco sporco */
-            --text-muted: #94a3b8;    /* Grigio chiaro */
-            --accent: #38bdf8;        /* Azzurro acceso */
-            --accent-hover: #0ea5e9;  
-            --instagram: #E1306C;     
+            --bg: #050c08;
+            --bg-2: #0a1510;
+            --card: rgba(255,255,255,0.04);
+            --card-border: rgba(255,255,255,0.08);
+            --text: #eef5ec;
+            --muted: #7a9080;
+            --accent: #7ecb8f;
+            --accent-2: #a8d5ba;
+            --accent-3: #f4a261;
+            --glow: rgba(126,203,143,0.25);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg);
+            color: var(--text);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+
+        a { text-decoration: none; color: inherit; }
         ul { list-style: none; }
 
-        /* --- LAYOUT UTILITIES --- */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* ── BACKGROUND ── */
+        #bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        section { padding: 80px 0; }
+        /* Mountain silhouettes */
+        .mountains {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 0;
+            pointer-events: none;
+            height: 55vh;
+            overflow: hidden;
+        }
+        .mountains svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
 
-        /* --- HEADER --- */
+        /* ── HEADER ── */
         header {
-            padding: 20px 0;
-            position: sticky;
-            top: 0;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 200;
+            padding: 0;
+            transition: all 0.4s;
+        }
+
+        header.scrolled {
+            background: rgba(5, 12, 8, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
         }
 
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 20px 40px;
         }
 
-        .logo { font-weight: 800; font-size: 1.5rem; letter-spacing: -1px; }
-        .logo span { color: var(--accent); }
+        .logo {
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .logo-f { color: var(--text); }
+        .logo-t { color: var(--accent); }
+        .logo-dot { color: var(--accent-3); font-size: 2rem; line-height: 0; margin-bottom: -4px; }
 
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { font-weight: 500; font-size: 0.95rem; color: var(--text-muted); }
-        .nav-links a:hover { color: var(--accent); }
-        
-        .nav-links a.ig-link:hover { color: #E1306C; }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
 
-        /* --- HERO SECTION --- */
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+            transition: color 0.3s;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a.ig-link:hover { color: #f472b6; }
+        .nav-links a.ig-link:hover::after { background: #f472b6; }
+
+        .nav-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 20px;
+            background: var(--accent);
+            color: var(--bg) !important;
+            font-weight: 700;
+            font-size: 0.85rem;
+            border-radius: 40px;
+            transition: all 0.3s !important;
+            box-shadow: 0 0 20px rgba(126,203,143,0.3);
+        }
+        .nav-cta::after { display: none !important; }
+        .nav-cta:hover {
+            background: #a5d6b0 !important;
+            transform: translateY(-1px);
+            box-shadow: 0 0 30px rgba(126,203,143,0.5) !important;
+        }
+
+        /* ── HERO ── */
         .hero {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 100px;
-            padding-bottom: 60px;
+            padding: 140px 24px 80px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px 6px 8px;
+            background: rgba(126,203,143,0.1);
+            border: 1px solid rgba(126,203,143,0.25);
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 32px;
+            animation: fadeUp 0.6s ease both;
+        }
+        .hero-badge-dot {
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #fff, var(--accent));
+            font-size: clamp(2.8rem, 7vw, 5.5rem);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            animation: fadeUp 0.6s 0.1s ease both;
+        }
+
+        .hero-line-1 { display: block; color: var(--text); }
+        .hero-line-2 {
+            display: block;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent-3) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin-bottom: 40px;
+            font-size: 1.15rem;
+            color: var(--muted);
+            max-width: 520px;
+            margin-bottom: 44px;
+            font-weight: 400;
+            animation: fadeUp 0.6s 0.2s ease both;
         }
 
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--accent);
-            color: var(--bg-color);
-            font-weight: 600;
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeUp 0.6s 0.3s ease both;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 700;
+            font-size: 0.95rem;
             border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
+            box-shadow: 0 4px 30px rgba(126,203,143,0.4);
+            transition: all 0.3s;
         }
-        .btn:hover { background-color: var(--accent-hover); transform: translateY(-2px); }
+        .btn-primary:hover {
+            background: #a5d6b0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 40px rgba(126,203,143,0.5);
+        }
 
-        /* --- VIDEO SECTION --- */
-        .videos-header {
-            text-align: center;
-            margin-bottom: 50px;
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            background: var(--card);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            border: 1px solid var(--card-border);
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
         }
-        .videos-header h2 { font-size: 2.5rem; margin-bottom: 10px; }
-        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+        .btn-secondary .ig-icon { color: #f472b6; }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: fadeUp 0.6s 0.5s ease both;
+        }
+        .scroll-line {
+            width: 1px;
+            height: 50px;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollLine 2s ease-in-out infinite;
+        }
+        @keyframes scrollLine {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            51% { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        /* ── SECTION COMMON ── */
+        section { position: relative; z-index: 1; padding: 100px 0; }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        .section-tag::before {
+            content: '';
+            width: 20px; height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            font-size: 1.05rem;
+            max-width: 500px;
+        }
+
+        .section-header { margin-bottom: 60px; }
+
+        /* ── DIVIDER ── */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--card-border), transparent);
+        }
+
+        /* ── VIDEO SECTION ── */
         .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 24px;
         }
 
         .video-card {
-            background: var(--card-bg);
-            border-radius: 16px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.05);
             display: flex;
             flex-direction: column;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(126,203,143,0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+            pointer-events: none;
         }
 
         .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border-color: var(--accent);
+            transform: translateY(-8px);
+            border-color: rgba(126,203,143,0.4);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(126,203,143,0.1);
         }
+        .video-card:hover::before { opacity: 1; }
 
         .thumbnail-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            background: #000;
+            padding-top: 56.25%;
+            background: #0a1628;
+            overflow: hidden;
         }
 
         .thumbnail-wrapper img {
             position: absolute;
-            top: 0;
-            left: 0;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.9;
+            transition: transform 0.5s ease;
+        }
+        .video-card:hover .thumbnail-wrapper img { transform: scale(1.05); }
+
+        .thumbnail-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(6,11,24,0.8) 0%, transparent 60%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .video-card:hover .thumbnail-overlay { opacity: 1; }
+
+        .play-btn {
+            width: 56px; height: 56px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--bg);
+            box-shadow: 0 0 30px rgba(126,203,143,0.5);
+            transform: scale(0.8);
+            transition: transform 0.3s;
+        }
+        .video-card:hover .play-btn { transform: scale(1); }
+
+        .video-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .video-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .video-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; line-height: 1.4; }
-        .video-date { font-size: 0.85rem; color: var(--text-muted); margin-top: auto; }
+        .video-tag {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
 
-        /* --- FOOTER --- */
+        .video-title {
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--text);
+        }
+
+        .video-meta {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: auto;
+        }
+
+        /* ── LOADING / ERROR ── */
+        .loading-state {
+            grid-column: 1 / -1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            padding: 60px;
+            color: var(--muted);
+        }
+        .loader {
+            width: 40px; height: 40px;
+            border: 3px solid rgba(126,203,143,0.15);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── FOOTER ── */
         footer {
+            position: relative;
+            z-index: 1;
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .footer-logo {
+            font-weight: 900;
+            font-size: 1.8rem;
+            letter-spacing: -1px;
+        }
+        .footer-logo span { color: var(--accent); }
+
+        .footer-tagline {
+            color: var(--muted);
+            font-size: 0.9rem;
             text-align: center;
-            padding: 50px 0;
-            color: var(--text-muted);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 60px;
+            max-width: 400px;
         }
 
-        .social-links { margin-bottom: 20px; }
-        .social-links a {
-            font-size: 1.5rem;
-            margin: 0 15px;
-            color: var(--text-main);
+        .social-row {
+            display: flex;
+            gap: 16px;
         }
-        .social-links a:hover { color: var(--accent); }
-        
-        /* Hover specifico per icone social */
-        .social-links a.fa-instagram:hover { color: #E1306C; }
-        .social-links a.fa-youtube:hover { color: #FF0000; }
 
-        /* --- RESPONSIVE --- */
+        .social-btn {
+            width: 48px; height: 48px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--muted);
+            transition: all 0.3s;
+        }
+        .social-btn:hover { transform: translateY(-4px); }
+        .social-btn.yt:hover { color: #FF0000; border-color: rgba(255,0,0,0.3); background: rgba(255,0,0,0.08); box-shadow: 0 8px 20px rgba(255,0,0,0.15); }
+        .social-btn.ig:hover { color: #f472b6; border-color: rgba(244,114,182,0.3); background: rgba(244,114,182,0.08); box-shadow: 0 8px 20px rgba(244,114,182,0.15); }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: rgba(136, 150, 176, 0.5);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── GLOW ORBS ── */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb-1 {
+            width: 600px; height: 400px;
+            background: radial-gradient(circle, rgba(30,80,45,0.35) 0%, transparent 70%);
+            top: 10%; left: -150px;
+        }
+        .orb-2 {
+            width: 500px; height: 350px;
+            background: radial-gradient(circle, rgba(244,162,97,0.07) 0%, transparent 70%);
+            top: 30%; right: -100px;
+        }
+        .orb-3 {
+            width: 700px; height: 300px;
+            background: radial-gradient(circle, rgba(20,60,30,0.4) 0%, transparent 70%);
+            bottom: 0; left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ── MOBILE MENU ── */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            flex-direction: column;
+            gap: 5px;
+            padding: 4px;
+        }
+        .menu-toggle span {
+            display: block;
+            width: 24px; height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .nav-links { display: none; } /* Semplificazione per mobile */
+            nav { padding: 16px 24px; }
+
+            .menu-toggle { display: flex; }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0; right: 0;
+                flex-direction: column;
+                gap: 0;
+                background: rgba(6,11,24,0.98);
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--card-border);
+                padding: 8px 0;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a {
+                padding: 14px 28px;
+                font-size: 1rem;
+            }
+            .nav-links a::after { display: none; }
+            .nav-cta { margin: 8px 20px 12px; }
+
+            .hero { padding-top: 120px; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .btn-primary, .btn-secondary { width: 100%; max-width: 280px; justify-content: center; }
+            .scroll-indicator { display: none; }
+
+            section { padding: 70px 0; }
         }
-        
-        /* Loading State */
-        #loading-msg { text-align: center; color: var(--text-muted); width: 100%; padding: 20px;}
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo">F<span>Tonelli</span></a>
-                <div class="nav-links">
-                    <a href="#home">Home</a>
-                    <a href="#videos">Video</a>
-                    <a href="https://www.instagram.com/themorpheus/" target="_blank" class="ig-link">Instagram</a>
-                </div>
-            </nav>
-        </div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Mountain + forest silhouettes -->
+    <div class="mountains">
+        <!-- Layer 1: distant peaks -->
+        <svg viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,320 L0,200 L60,170 L120,190 L200,120 L280,160 L360,90 L430,130 L500,70 L570,110 L640,55 L710,95 L780,40 L850,80 L920,30 L990,70 L1060,50 L1130,85 L1200,45 L1280,90 L1360,60 L1440,100 L1440,320 Z" fill="rgba(15,35,20,0.55)"/>
+        </svg>
+        <!-- Layer 2: mid peaks -->
+        <svg viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,320 L0,240 L80,210 L160,230 L240,175 L310,210 L390,155 L460,190 L540,135 L620,175 L700,120 L770,160 L850,105 L920,145 L1000,100 L1080,140 L1150,115 L1230,150 L1310,120 L1380,155 L1440,130 L1440,320 Z" fill="rgba(10,28,15,0.65)"/>
+        </svg>
+        <!-- Layer 3: near ridge -->
+        <svg viewBox="0 0 1440 320" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,320 L0,270 L70,250 L130,265 L200,235 L260,255 L330,220 L400,245 L470,210 L540,240 L610,200 L680,228 L750,195 L820,218 L890,185 L960,210 L1030,182 L1100,205 L1170,185 L1240,210 L1320,188 L1440,215 L1440,320 Z" fill="rgba(7,20,10,0.75)"/>
+        </svg>
+        <!-- Layer 4: forest treeline -->
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,160
+              L0,110 L8,95 L16,110 L20,88 L28,110 L36,80 L44,100 L52,70 L60,95 L68,65 L76,90 L84,60 L92,85 L100,55
+              L108,80 L116,50 L124,78 L132,48 L140,75 L148,52 L156,80 L164,45 L172,72 L180,42 L188,68 L196,38 L204,65
+              L212,40 L220,68 L228,35 L236,62 L244,32 L252,60 L260,38 L268,65 L276,30 L284,58 L292,28 L300,55
+              L308,35 L316,62 L324,30 L332,58 L340,28 L348,55 L356,32 L364,60 L372,25 L380,55 L388,28 L396,56
+              L404,30 L412,58 L420,25 L428,52 L436,22 L444,50 L452,28 L460,55 L468,20 L476,48 L484,18 L492,46
+              L500,25 L508,52 L516,22 L524,50 L532,20 L540,48 L548,25 L556,52 L564,18 L572,46 L580,15 L588,44
+              L596,20 L604,48 L612,18 L620,46 L628,22 L636,50 L644,18 L652,46 L660,15 L668,44 L676,18 L684,46
+              L692,20 L700,48 L708,16 L716,44 L724,14 L732,42 L740,20 L748,48 L756,18 L764,46 L772,15 L780,44
+              L788,18 L796,46 L804,22 L812,50 L820,18 L828,46 L836,15 L844,44 L852,20 L860,48 L868,18 L876,46
+              L884,16 L892,44 L900,20 L908,48 L916,15 L924,44 L932,18 L940,46 L948,20 L956,48 L964,16 L972,44
+              L980,14 L988,42 L996,18 L1004,46 L1012,16 L1020,44 L1028,20 L1036,48 L1044,16 L1052,44 L1060,18
+              L1068,46 L1076,14 L1084,42 L1092,18 L1100,46 L1108,16 L1116,44 L1124,20 L1132,48 L1140,16 L1148,44
+              L1156,18 L1164,46 L1172,15 L1180,44 L1188,20 L1196,48 L1204,16 L1212,44 L1220,18 L1228,46 L1236,20
+              L1244,48 L1252,16 L1260,44 L1268,18 L1276,46 L1284,14 L1292,42 L1300,18 L1308,46 L1316,16 L1324,44
+              L1332,20 L1340,48 L1348,16 L1356,44 L1364,18 L1372,46 L1380,20 L1388,48 L1396,16 L1404,44 L1412,18
+              L1420,46 L1428,14 L1436,42 L1440,35
+              L1440,160 Z" fill="rgba(4,14,7,0.92)"/>
+        </svg>
+    </div>
+
+    <header id="main-header">
+        <nav class="container">
+            <a href="#" class="logo">
+                <span class="logo-f">F</span><span class="logo-t">Tonelli</span><span class="logo-dot">·</span>
+            </a>
+
+            <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+
+            <div class="nav-links" id="nav-links">
+                <a href="#home">Home</a>
+                <a href="#videos">Video</a>
+                <a href="https://www.instagram.com/themorpheus/" target="_blank" class="ig-link">Instagram</a>
+                <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" class="nav-cta">
+                    <i class="fa-brands fa-youtube"></i> Iscriviti
+                </a>
+            </div>
+        </nav>
     </header>
 
     <main>
         <section id="home" class="hero">
             <div class="container">
-                <h1>Benvenuto nel mio<br>Spazio Digitale</h1>
-                <p>Esploro tecnologia, coding e condivido quello che imparo lungo il percorso.</p>
-                <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" class="btn">
-                    <i class="fa-brands fa-youtube"></i> Iscriviti al Canale
-                </a>
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    Tecnologia &amp; Creatività
+                </div>
+                <h1>
+                    <span class="hero-line-1">Ciao, sono</span>
+                    <span class="hero-line-2">Francesco Tonelli</span>
+                </h1>
+                <p>Esploro tecnologia, coding e condivido quello che imparo lungo il percorso. Un video alla volta.</p>
+                <div class="hero-actions">
+                    <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" class="btn-primary">
+                        <i class="fa-brands fa-youtube"></i> Guarda i Video
+                    </a>
+                    <a href="https://www.instagram.com/themorpheus/" target="_blank" class="btn-secondary">
+                        <i class="fa-brands fa-instagram ig-icon"></i> Seguimi su Instagram
+                    </a>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-line"></div>
+                <span>Scorri</span>
             </div>
         </section>
 
+        <div class="divider"></div>
+
         <section id="videos">
             <div class="container">
-                <div class="videos-header">
-                    <h2>Ultimi Video</h2>
-                    </div>
+                <div class="section-header reveal">
+                    <div class="section-tag">YouTube</div>
+                    <h2 class="section-title">Ultimi Video</h2>
+                    <p class="section-sub">I contenuti più recenti dal canale — coding, tech e molto altro.</p>
+                </div>
 
                 <div class="video-grid" id="video-container">
-                    <div id="loading-msg">Caricamento video in corso...</div>
+                    <div class="loading-state">
+                        <div class="loader"></div>
+                        <span>Caricamento video in corso…</span>
                     </div>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <div class="social-links">
-                <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" title="YouTube" class="fa-brands fa-youtube"></a>
-                <a href="https://www.instagram.com/themorpheus/" target="_blank" title="Instagram" class="fa-brands fa-instagram"></a>
+            <div class="footer-inner">
+                <div class="footer-logo">F<span>Tonelli</span></div>
+                <p class="footer-tagline">Esplorare la tecnologia, un video alla volta.</p>
+                <div class="social-row">
+                    <a href="https://www.youtube.com/@FrancescoTonelli" target="_blank" class="social-btn yt" title="YouTube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                    <a href="https://www.instagram.com/themorpheus/" target="_blank" class="social-btn ig" title="Instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+                <p class="footer-copy">&copy; 2025 Francesco Tonelli. Tutti i diritti riservati.</p>
             </div>
-            <p>&copy; 2025 Francesco Tonelli. Tutti i diritti riservati.</p>
         </div>
     </footer>
 
     <script>
-        // --- CONFIGURAZIONE ---
-        const YOUTUBE_CHANNEL_ID = 'UC1mXM_M40mLIkw8CJeWj3MA'; 
-        const MAX_VIDEOS = 3; 
+        /* ── Firefly canvas ── */
+        (function() {
+            const canvas = document.getElementById('bg-canvas');
+            const ctx = canvas.getContext('2d');
+            let w, h, flies;
+
+            function makefly() {
+                return {
+                    x: Math.random() * w,
+                    y: Math.random() * h * 0.85 + h * 0.15,
+                    r: Math.random() * 1.8 + 0.6,
+                    vx: (Math.random() - 0.5) * 0.25,
+                    vy: -(Math.random() * 0.4 + 0.05),
+                    alpha: 0,
+                    maxAlpha: Math.random() * 0.7 + 0.3,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: Math.random() * 0.01 + 0.005,
+                    /* warm amber-green palette */
+                    hue: Math.random() < 0.6 ? 85 : 40
+                };
+            }
+
+            function init() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+                flies = Array.from({ length: 55 }, makefly);
+            }
+
+            let t = 0;
+            function draw() {
+                t++;
+                ctx.clearRect(0, 0, w, h);
+                flies.forEach(f => {
+                    f.x += f.vx + Math.sin(t * f.speed + f.phase) * 0.3;
+                    f.y += f.vy;
+                    f.alpha = f.maxAlpha * (0.5 + 0.5 * Math.sin(t * f.speed * 3 + f.phase));
+
+                    if (f.y < -10) { Object.assign(f, makefly()); f.y = h + 10; }
+                    if (f.x < -10) f.x = w + 10;
+                    if (f.x > w + 10) f.x = -10;
+
+                    /* glow */
+                    const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.r * 6);
+                    grad.addColorStop(0, `hsla(${f.hue},90%,70%,${f.alpha})`);
+                    grad.addColorStop(1, `hsla(${f.hue},90%,70%,0)`);
+                    ctx.beginPath();
+                    ctx.arc(f.x, f.y, f.r * 6, 0, Math.PI * 2);
+                    ctx.fillStyle = grad;
+                    ctx.fill();
+
+                    /* core dot */
+                    ctx.beginPath();
+                    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+                    ctx.fillStyle = `hsla(${f.hue},100%,90%,${f.alpha})`;
+                    ctx.fill();
+                });
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener('resize', init);
+            init();
+            draw();
+        })();
+
+        /* ── Header scroll effect ── */
+        const header = document.getElementById('main-header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        /* ── Mobile menu ── */
+        const toggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        toggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+        navLinks.querySelectorAll('a').forEach(a => {
+            a.addEventListener('click', () => navLinks.classList.remove('open'));
+        });
+
+        /* ── Scroll reveal ── */
+        const revealEls = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+            });
+        }, { threshold: 0.1 });
+        revealEls.forEach(el => observer.observe(el));
+
+        /* ── YouTube RSS ── */
+        const CHANNEL_ID = 'UC1mXM_M40mLIkw8CJeWj3MA';
+        const MAX_VIDEOS = 6;
 
         async function fetchLatestVideos() {
             const container = document.getElementById('video-container');
-            const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
+            const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
             const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
 
             try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
+                const res = await fetch(apiUrl);
+                const data = await res.json();
 
                 if (data.status === 'ok') {
-                    container.innerHTML = ''; 
-                    const items = data.items.slice(0, MAX_VIDEOS);
-
-                    items.forEach(video => {
+                    container.innerHTML = '';
+                    const regularVideos = data.items.filter(v => !v.link.includes('/shorts/'));
+                    regularVideos.slice(0, MAX_VIDEOS).forEach((video, i) => {
                         const videoId = video.link.split('v=')[1];
-                        const highResThumbnail = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
-
+                        const thumb = `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`;
                         const date = new Date(video.pubDate).toLocaleDateString('it-IT', {
                             year: 'numeric', month: 'long', day: 'numeric'
                         });
 
-                        const html = `
-                            <a href="${video.link}" target="_blank" class="video-card">
-                                <div class="thumbnail-wrapper">
-                                    <img src="${highResThumbnail}" alt="${video.title}" loading="lazy" 
-                                         onerror="this.src='${video.thumbnail}'"> 
+                        const card = document.createElement('a');
+                        card.href = video.link;
+                        card.target = '_blank';
+                        card.className = 'video-card reveal';
+                        card.style.transitionDelay = `${i * 0.1}s`;
+                        card.innerHTML = `
+                            <div class="thumbnail-wrapper">
+                                <img src="${thumb}" alt="${video.title}" loading="lazy"
+                                     onerror="this.src='${video.thumbnail}'">
+                                <div class="thumbnail-overlay">
+                                    <div class="play-btn"><i class="fa-solid fa-play"></i></div>
                                 </div>
-                                <div class="video-info">
-                                    <h3 class="video-title">${video.title}</h3>
-                                    <div class="video-date"><i class="far fa-calendar-alt"></i> ${date}</div>
+                            </div>
+                            <div class="video-info">
+                                <div class="video-tag">YouTube</div>
+                                <h3 class="video-title">${video.title}</h3>
+                                <div class="video-meta">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <span>${date}</span>
                                 </div>
-                            </a>
+                            </div>
                         `;
-                        container.innerHTML += html;
+                        container.appendChild(card);
+                        observer.observe(card);
                     });
                 } else {
-                    container.innerHTML = '<p>Impossibile caricare i video al momento.</p>';
+                    container.innerHTML = '<div class="loading-state"><i class="fa-solid fa-triangle-exclamation" style="font-size:2rem;color:var(--muted)"></i><span>Impossibile caricare i video al momento.</span></div>';
                 }
-            } catch (error) {
-                console.error('Errore:', error);
-                container.innerHTML = '<p>Errore nel caricamento del feed video.</p>';
+            } catch (err) {
+                console.error(err);
+                container.innerHTML = '<div class="loading-state"><i class="fa-solid fa-triangle-exclamation" style="font-size:2rem;color:var(--muted)"></i><span>Errore nel caricamento del feed.</span></div>';
             }
         }
 
-        if(YOUTUBE_CHANNEL_ID.length > 10) {
-            fetchLatestVideos();
-        }
+        fetchLatestVideos();
     </script>
 </body>
 </html>
